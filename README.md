@@ -17,7 +17,7 @@ This project generates a webpage showcasing different animals. The information i
 To get started, clone the repository and install the required libraries:
 
 ```bash
-git clone https://github.com/your_username/zootopia_with_api.git
+git clone https://github.com/akshaysatheesh11/zootopia_with_api.git
 cd zootopia_with_api
 pip3 install -r requirements.txt
 requests: A library for making HTTP requests to the API.
