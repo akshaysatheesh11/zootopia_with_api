@@ -1,16 +1,8 @@
-import json
 import logging
-import time  # This is necessary for the time-related logging
+import time
+import data_fetcher  # Import the data fetcher module
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(message)s')
-
-def load_data(file_path):
-    """Loads a JSON file"""
-    logging.debug(f"Loading data from {file_path} at {time.time()}...")  # Keeping remote change
-    with open(file_path, "r") as handle:
-        data = json.load(handle)
-    logging.debug(f"Loaded {len(data)} animals with additional info.")  # Keeping remote change
-    return data
 
 def generate_html(animals_data):
     """Generates HTML for animal cards"""
@@ -54,14 +46,20 @@ def write_html(html_content):
     logging.debug("HTML file written to animals.html.")
 
 def main():
-    # Load the animal data from the JSON file
-    animals_data = load_data('animals_data.json')
+    # Ask the user for an animal name
+    animal_name = input("Please enter an animal: ")
     
-    # Generate the HTML content for the animal cards
-    html_content = generate_html(animals_data)
+    # Fetch data from the API using the data_fetcher
+    animals_data = data_fetcher.fetch_data(animal_name)
     
-    # Write the generated HTML into a new file
-    write_html(html_content)
+    if animals_data:
+        # Generate the HTML content for the animal cards
+        html_content = generate_html(animals_data)
+        
+        # Write the generated HTML into a new file
+        write_html(html_content)
+    else:
+        print(f"The animal '{animal_name}' doesn't exist or there was an error fetching the data.")
 
 if __name__ == "__main__":
     logging.debug("Script is starting...")
